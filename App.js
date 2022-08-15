@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState}  from "react";
 import {
   View,
   Text,
@@ -24,8 +24,15 @@ function LoginScreen() {
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <View style={styles.inputContainer}>
-        <TextInput placeholder="Email" style={styles.input}></TextInput>
         <TextInput
+          value={email} 
+          onChangeText={text => setEmail(text)}
+          placeholder="Email" 
+          style={styles.input}
+        ></TextInput>
+        <TextInput
+          value={pass} 
+          onChangeText={text => setPass(text)}
           placeholder="Password"
           secureTextEntry
           style={styles.input}
