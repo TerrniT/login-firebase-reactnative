@@ -1,23 +1,33 @@
 import * as React from "react";
-import { View, Text, KeyboardAvoidingView, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  KeyboardAvoidingView,
+  StyleSheet,
+  TextInput,
+} from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 function HomeScreen() {
   return (
-    <View style={styles.homeScreen}>
-      <Text style={styles.homeScreenText}>Home Screen Hooray!</Text>
+    <View style={styles.container}>
+      <Text style={styles.text}>Home Screen Hooray!</Text>
     </View>
   );
 }
 
 function LoginScreen() {
   return (
-    <KeyboardAvoidingView 
-      style={styles.loginScreen}
-      behavior="padding"
-      >
-      <Text style={styles.loginScreenText}>Login Screen Hooray!</Text>
+    <KeyboardAvoidingView style={styles.container} behavior="padding">
+      <View style={styles.inputContainer}>
+        <TextInput placeholder="Email" style={styles.input}></TextInput>
+        <TextInput
+          placeholder="Password"
+          secureTextEntry
+          style={styles.input}
+        ></TextInput>
+      </View>
     </KeyboardAvoidingView>
   );
 }
@@ -38,22 +48,14 @@ function App() {
 export default App;
 
 const styles = StyleSheet.create({
-  loginScreen: {
+  container: {
+    justifyContent:'center', 
     flex: 1,
+    alignItems: 'center',
     backgroundColor: "#333",
-    padding: 8,
-   
   },
-  loginScreenText: {
+  text: {
     color: "white",
   },
-  homeScreen: {
-    flex: 1,
-    backgroundColor: "#333",
-    padding: 8,
-   
-  },
-  homeScreenText: {
-    color: "#334343",
-  },
+  input
 });
