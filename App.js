@@ -5,6 +5,7 @@ import {
   KeyboardAvoidingView,
   StyleSheet,
   TextInput,
+  TouchableOpacity,
 } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -28,6 +29,16 @@ function LoginScreen() {
           style={styles.input}
         ></TextInput>
       </View>
+      <View>
+        <TouchableOpacity onPress={() => {}} style={styles.buttonContainer}>
+          <Text style={styles.button}>Login</Text>
+        </TouchableOpacity>
+      </View>
+      <View>
+        <TouchableOpacity onPress={() => {}} style={styles.buttonContainer}>
+          <Text style={styles.button}>Register</Text>
+        </TouchableOpacity>
+      </View>
     </KeyboardAvoidingView>
   );
 }
@@ -49,13 +60,16 @@ export default App;
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent:'center', 
+    justifyContent: "center",
     flex: 1,
-    alignItems: 'center',
+    alignItems: "center",
     backgroundColor: "#333",
   },
   text: {
     color: "white",
   },
-  input
+  input: {
+    color: "cyan",
+  },
+  buttonContainer: {},
 });
