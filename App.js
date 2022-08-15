@@ -19,6 +19,8 @@ function HomeScreen() {
 }
 
 function LoginScreen() {
+  const [email, setEmail] = useState('')
+  const [pass, setPass] = useState('')
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <View style={styles.inputContainer}>
@@ -29,14 +31,17 @@ function LoginScreen() {
           style={styles.input}
         ></TextInput>
       </View>
-      <View>
-        <TouchableOpacity onPress={() => {}} style={styles.buttonContainer}>
-          <Text style={styles.button}>Login</Text>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity onPress={() => {}} style={styles.button}>
+          <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
       </View>
-      <View>
-        <TouchableOpacity onPress={() => {}} style={styles.buttonContainer}>
-          <Text style={styles.button}>Register</Text>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity
+          onPress={() => {}}
+          style={[styles.button, styles.buttonOutline]}
+        >
+          <Text style={styles.buttonOutlineText}>Register</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
@@ -69,7 +74,41 @@ const styles = StyleSheet.create({
     color: "white",
   },
   input: {
-    color: "cyan",
+    color: "#123533",
+    backgroundColor: "#909090",
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    margin: 5,
   },
-  buttonContainer: {},
+  inputContainer: {
+    width: "80%",
+  },
+  buttonContainer: {
+    width: "60%",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 40,
+  },
+  button: {
+    width: "100%",
+    backgroundColor: "#787878",
+    padding: 15,
+    borderRadius: 9,
+    alignItems: "center",
+  },
+  buttonOutline: {
+    backgroundColor: "#12de32",
+    borderColor: "#123533",
+    borderWidth: 2,
+  },
+  buttonText: {
+    color: "white",
+    fontWeight: "700",
+    fontSize: 14,
+  },
+  buttonOutlineText: {
+    color: "#778899",
+    fontWeight: "700",
+    fontSize: 14,
+  },
 });
