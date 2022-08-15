@@ -1,4 +1,4 @@
-import React, { useState}  from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { auth } from "./firebase";
 
 function HomeScreen() {
   return (
@@ -19,20 +20,30 @@ function HomeScreen() {
 }
 
 function LoginScreen() {
-  const [email, setEmail] = useState('')
-  const [pass, setPass] = useState('')
+  const [email, setEmail] = useState("");
+  const [pass, setPass] = useState("");
+
+  const handleSignUp = () => {
+    auth
+      .createUserWithEmailAndPassword(email, pass)
+      .then((userCrendetials) => {
+        const user = userCrendetials.user;
+        console.log(user.email);
+      })
+      .catch((error) => alert(error.message));
+  };
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <View style={styles.inputContainer}>
         <TextInput
-          value={email} 
-          onChangeText={text => setEmail(text)}
-          placeholder="Email" 
+          value={email}
+          onChangeText={(text) => setEmail(text)}
+          placeholder="Email"
           style={styles.input}
         ></TextInput>
         <TextInput
-          value={pass} 
-          onChangeText={text => setPass(text)}
+          value={pass}
+          onChangeText={(text) => setPass(text)}
           placeholder="Password"
           secureTextEntry
           style={styles.input}
@@ -45,7 +56,7 @@ function LoginScreen() {
       </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity
-          onPress={() => {}}
+          onPress={handleSignUp}
           style={[styles.button, styles.buttonOutline]}
         >
           <Text style={styles.buttonOutlineText}>Register</Text>
