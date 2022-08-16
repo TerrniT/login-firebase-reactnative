@@ -1,20 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
   KeyboardAvoidingView,
   StyleSheet,
   TextInput,
+  Platform,
   TouchableOpacity,
 } from "react-native";
+import { useNavigation } from "@react-navigation/core";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { auth } from "./firebase";
 
 function HomeScreen() {
+  const navigation = useNavigation();
+
+  const handleSignOut = () => {
+    auth
+      .signOut()
+      .then(() => {
+        navigation.replace("Login");
+      })
+      .catch((error) => alert(error.message));
+  };
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Home Screen Hooray!</Text>
+      <View style={styles.buttonContainer}>
+        <Text>Email: {auth.currentUser?.email} </Text>
+        <TouchableOpacity onPress={handleSignOut} style={styles.button}>
+          <Text style={styles.buttonText}>Log out</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -22,6 +39,18 @@ function HomeScreen() {
 function LoginScreen() {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
+
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        navigation.replace("Home");
+      }
+    });
+
+    return unsubscribe;
+  }, []);
 
   const handleSignUp = () => {
     auth
@@ -32,8 +61,21 @@ function LoginScreen() {
       })
       .catch((error) => alert(error.message));
   };
+  const handleLogin = () => {
+    auth
+      .signInWithEmailAndPassword(email, pass)
+      .then((userCrendetials) => {
+        const user = userCrendetials.user;
+        console.log(user.email);
+      })
+      .catch((error) => alert(error.message));
+  };
+
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="padding">
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
       <View style={styles.inputContainer}>
         <TextInput
           value={email}
@@ -50,7 +92,7 @@ function LoginScreen() {
         ></TextInput>
       </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={() => {}} style={styles.button}>
+        <TouchableOpacity onPress={handleLogin} style={styles.button}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
       </View>
@@ -71,7 +113,11 @@ const Stack = createNativeStackNavigator();
 function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
       </Stack.Navigator>
